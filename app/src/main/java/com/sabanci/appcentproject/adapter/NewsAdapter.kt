@@ -11,7 +11,7 @@ import com.sabanci.appcentproject.data.Article
 import com.sabanci.appcentproject.databinding.NewsItemBinding
 import coil.load
 
-class NewsAdapter(private val newsList: ArrayList<Article>) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(private val newsList: ArrayList<Article>, private val listener: ArticleClickListener) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 
 
@@ -26,12 +26,17 @@ class NewsAdapter(private val newsList: ArrayList<Article>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
+        val article = newsList[position]
 
 
         holder.binding.apply {
-            newsImage.load(newsList[position].urlToImage)
-            newsTitle.text = newsList[position].title
-            newsDetail.text = newsList[position].description
+            newsImage.load(article.urlToImage)
+            newsTitle.text = article.title
+            newsDetail.text = article.description
+        }
+
+        holder.itemView.setOnClickListener {
+            listener.onArticleClick(article)
         }
 
     }
